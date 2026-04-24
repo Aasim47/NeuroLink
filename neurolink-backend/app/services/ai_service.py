@@ -21,7 +21,7 @@ Answer in a simple and comforting way.
 """
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model="gemini-3.1-flash-lite-preview",
         contents=prompt
     )
 
@@ -31,7 +31,7 @@ Answer in a simple and comforting way.
 def generate_ai_response(prompt):
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
+        model="gemini-3.1-flash-lite-preview",
         contents=prompt
     )
 

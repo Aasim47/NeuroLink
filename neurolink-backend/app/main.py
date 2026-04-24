@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from app.routers import patients
 from app.routers import family
@@ -11,9 +17,19 @@ from app.routers import photos
 from app.routers import safezone
 from app.routers import assistant
 from app.routers import patient_summary
+from app.database.engine import init_db
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="NeuroLink API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # ── Startup: Auto-create all database tables ──
+    init_db()
+    yield
+    # ── Shutdown: cleanup if needed ──
+
+
+app = FastAPI(title="NeuroLink API", lifespan=lifespan)
 
 app.include_router(patients.router)
 app.include_router(family.router)
